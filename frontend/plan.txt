@@ -1,4 +1,0 @@
-Add nextjs
-Add react-leaflet, tanstack query and toolkit, redux toolkit
-Add featureType and address to redux and tanstack query
-Add components Tabs, MapView, MapUpdater, AddressFrom
