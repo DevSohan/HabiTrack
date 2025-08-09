@@ -11,9 +11,10 @@ async def get_features_by_address(
     house_number: str,
     zip_code: str,
     city: str,
-    search_feature: Literal["station", "green_spaces", "noise_level", "hospital", "kita"],
+    search_feature: Literal["stations", "green_spaces", "noise_levels", "hospitals", "kindergartens"],
     search_radius: int = 1000
 ):
+    print(street, house_number, zip_code, city, search_feature, search_radius)
     result = await query_features_by_address_async(
         street, house_number, zip_code, city, search_feature, search_radius
     )

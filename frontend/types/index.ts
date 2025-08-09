@@ -1,3 +1,5 @@
+import { LatLngExpression } from "leaflet";
+
 export interface Address {
     street: string;
     house_number: string;
@@ -6,14 +8,36 @@ export interface Address {
   }
   
   export interface FeaturePointGeometry {
-    type: 'Point';
-    coordinates: [number, number]; // [lon, lat]
+    type: 'Point' | "Polygon" | 'MultiPolygon';
+    coordinates: LatLngExpression | LatLngExpression[]; // [lon, lat]
   }
-  
-  export interface FeatureResult {
+
+  type GreenSpace = {
+    gruenart: string;
+  }
+
+  type Hospital = {
+    name: string
+  }
+
+  type Kindergarten = {
     name: string;
-    geometry: FeaturePointGeometry;
   }
+
+  type Noise = {
+    klasse: string;
+  }
+
+  type Station = {
+    name: string;
+    lines: string;
+  }
+
+  type FeatureTypes = GreenSpace | Hospital | Kindergarten | Noise | Station
+  
+  export type FeatureResult  = {
+    geometry: FeaturePointGeometry;
+  } & FeatureTypes
   
   export interface FeatureResponse {
     street: string;
@@ -22,6 +46,6 @@ export interface Address {
     city: string;
     lat: number;
     long: number;
-    feature: 'green_spaces' | 'hospitals' | 'kindergartens' | 'noise_level' | 'stations' | string;
+    feature: 'green_spaces' | 'hospitals' | 'kindergartens' | 'noise_levels' | 'stations' | string;
     results: FeatureResult[];
   }

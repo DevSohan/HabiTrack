@@ -7,6 +7,8 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",  # Next.js dev server
     "https://localhost:3000",  # in case you're using HTTPS locally
+    "http://backend:3000",  # Next.js dev server
+    "https://backend:3000",  # in case you're using HTTPS locally
 ]
 
 app.add_middleware(

@@ -1,18 +1,43 @@
-version: '3.8'
-
 services:
   postgis:
-    image: postgis/postgis:17-3.5
-    container_name: gisapp-postgis
-    environment:
-      POSTGRES_DB: gisdb
-      POSTGRES_USER: gisuser
-      POSTGRES_PASSWORD: gispass
+    image: postgis/postgis:16-3.4    # <-- pick an arm64-friendly tag
+    container_name: postgis
+    env_file:
+      - .env
     ports:
-      - "5432:5432"
+      - "5432:5432"                  # host 5433 -> container 5432
     volumes:
       - postgis_data:/var/lib/postgresql/data
     restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    command: fastapi dev index.py --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgis
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    command: npm run dev
+    env_file:
+      - .env
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
 volumes:
   postgis_data:

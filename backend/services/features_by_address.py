@@ -26,34 +26,36 @@ async def query_features_by_address_async(
     point_wkt = f"SRID=4326;POINT({lon} {lat})"
 
     column_map = {
-        "green_spaces": ["DISTINCT gruenart"],
-        "hospital": ["name"],
-        "kita": ["name"],
-        "noise_level": ["DISTINCT klasse"],
-        "station": ["name", "lines"]
+        "green_spaces": ["gruenart"],
+        "hospitals": ["name"],
+        "kindergartens": ["name"],
+        "noise_levels": ["klasse"],
+        "stations": ["name", "lines", "lineshortcat"]
     }
 
     if feature not in column_map:
         return None  # or raise HTTPException
 
     sql = make_nearby_query(feature, column_map[feature], search_radius)
+    print(sql)
+    print(point_wkt)
     rows = query_nearby(sql, point_wkt)
-    print(rows)
     # map to DTOs
     if feature == "green_spaces":
         items = [
-            GreenSpaceDTO(gruenart=row[0])
+            GreenSpaceDTO(gruenart=row[0], geometry=row[1])
             for row in rows
             if row[0] is not None
         ]
-    elif feature == "hospital":
+    elif feature == "hospitals":
         items = [HospitalDTO(name=row[0], geometry=row[1]) for row in rows]
-    elif feature == "kita":
+    elif feature == "kindergartens":
         items = [KindergartenDTO(name=row[0], geometry=row[1]) for row in rows]
-    elif feature == "noise_level":
-        items = [NoiseDTO(klasse=row[0]) for row in rows]
-    elif feature == "station":
-        items = [StationDTO(name=row[0], lines=row[1]) for row in rows]
+    elif feature == "noise_levels":
+        items = [NoiseDTO(klasse=row[0], geometry=row[1]) for row in rows]
+    elif feature == "stations":
+        print(rows)
+        items = [StationDTO(name=row[0], lines=row[1], lineshortcat=row[2], geometry=row[3]) for row in rows]
     else:
         items = []
     print(items)

@@ -18,10 +18,13 @@ class KindergartenDTO(BaseModel):
 
 class NoiseDTO(BaseModel):
     klasse: str
+    geometry: Dict
 
 class StationDTO(BaseModel):
     name: str
     lines: str
+    lineshortcat: str
+    geometry: Dict
 
 
 
