@@ -7,7 +7,7 @@ from db.connection import get_connection
 from utils.geocode_address import geocode_address
 
 from services.query_helpers import query_nearby_async, make_nearby_query, query_nearby
-from models.get_feature_dto import StationDTO, GreenSpaceDTO, HospitalDTO, KindergartenDTO, NoiseDTO, FeatureResultResponse
+from models.get_feature_dto import StationDTO, GreenSpaceDTO, HospitalDTO, KindergartenDTO, NoiseDTO, RestaurantDTO, FeatureResultResponse
 
 async def query_features_by_address_async(
     street: str,
@@ -30,7 +30,8 @@ async def query_features_by_address_async(
         "hospitals": ["name"],
         "kindergartens": ["name"],
         "noise_levels": ["klasse"],
-        "stations": ["name", "lines", "lineshortcat"]
+        "stations": ["name", "lines", "lineshortcat"],
+        "restaurants": ["name", "amenity", "cuisine"]
     }
 
     if feature not in column_map:
@@ -56,6 +57,9 @@ async def query_features_by_address_async(
     elif feature == "stations":
         print(rows)
         items = [StationDTO(name=row[0], lines=row[1], lineshortcat=row[2], geometry=row[3]) for row in rows]
+    elif feature == "restaurants":
+        print(rows)
+        items = [RestaurantDTO(name=row[0], amenity=row[1], cuisine=row[2], geometry=row[3]) for row in rows]
     else:
         items = []
     print(items)

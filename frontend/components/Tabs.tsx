@@ -5,6 +5,7 @@ const TABS = [
   "kindergartens",
   "noise_levels",
   "stations",
+  "restaurants",
   "green_spaces",
 ] as const;
 

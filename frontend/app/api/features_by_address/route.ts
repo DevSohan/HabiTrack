@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-const INTERNAL_API = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://backend:8000';
-
+const INTERNAL_API = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+console.log("INTERNAL_API", INTERNAL_API)
 export async function GET(req: NextRequest) {
   const url = `${INTERNAL_API}/features_by_address/?${req.nextUrl.searchParams.toString()}`;
   const r = await fetch(url, { headers: { Accept: 'application/json' } });

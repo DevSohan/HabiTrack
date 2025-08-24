@@ -26,6 +26,12 @@ class StationDTO(BaseModel):
     lineshortcat: str
     geometry: Dict
 
+class RestaurantDTO(BaseModel):
+    name: Optional[str]
+    amenity: Optional[str]
+    cuisine: Optional[str]
+    geometry: Dict
+
 
 
 FeatureResultItem = Union[
@@ -33,7 +39,8 @@ FeatureResultItem = Union[
     HospitalDTO,
     KindergartenDTO,
     NoiseDTO,
-    StationDTO
+    StationDTO,
+    RestaurantDTO
 ]
 
 
