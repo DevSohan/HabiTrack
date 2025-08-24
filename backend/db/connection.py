@@ -3,8 +3,9 @@ import psycopg2
 
 def get_connection():
     host = os.getenv("POSTGRES_HOST", "postgis")
-    port = int(os.getenv("POSTGRES_PORT", "5432"))
-    db   = os.getenv("POSTGRES_DB", "gisdb3")
+    #port = int(os.getenv("POSTGRES_PORT", "5432"))
+    port = "5432"
+    db   = os.getenv("POSTGRES_DB", "gisdb")
     user = os.getenv("POSTGRES_USER", "gisuser")
     pwd  = os.getenv("POSTGRES_PASSWORD", "gispass")
 
